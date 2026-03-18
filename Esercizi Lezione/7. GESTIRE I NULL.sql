@@ -1,4 +1,4 @@
-/* --- GESTIRE I NULL- ---
+/* --- GESTIRE I NULL ---
 Controlla se il valore è presente in una lista di valori */
 
 SELECT ...

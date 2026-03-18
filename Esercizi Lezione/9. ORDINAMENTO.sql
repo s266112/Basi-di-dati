@@ -1,7 +1,9 @@
-/* --- ORDINAMENTO ---
+/* ---  ORDINAMENTO --- 
 Stabilire l'ordine di presentazione dei risultati
+
 	-> ASC: Crescente (E' DI DEFAULT!)
-    -> DESC: Decrescente */ 
+    -> DESC: Decrescente 
+*/ 
     
 SELECT ...
 FROM ...
@@ -39,6 +41,7 @@ ORDER BY field(status, 'In Process', 'On Hold', 'Cancelled', 'Resolved', 'Disput
 
 /* --- RIGHE DUPLICATE ---
  Ogni tanto le query ritornano righe duplicate: come elimino i doppioni?*/
+ 
 SELECT DISTINCT ...
 FROM ...;
 

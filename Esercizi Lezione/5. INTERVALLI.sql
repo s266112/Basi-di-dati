@@ -1,5 +1,5 @@
 /* --- INTERVALLI ---
-Seleziona i valori compresi tra X e Y (inclusi) */
+ Seleziona i valori compresi tra X e Y (inclusi) */
 
 SELECT attributo
 FROM tabella
