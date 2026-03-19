@@ -13,7 +13,7 @@ INSERT INTO tabella(col1, col2, ...)
 INSERT INTO offices
 	VALUES (8, 'Trieste', '+89 040123789', 
     'Via Valerio 10', null, null, 
-    'Italy', '34100', 'ETNA')
+    'Italy', '34100', 'ETNA');
     
 /*  --- AGGIUNGERE DATI E SUBQUERY ---
 Vorrei usare una subquery per alimentare l'inserimento dei dati 
@@ -106,6 +106,70 @@ SET salesRepEmployeeNumber =
 	FROM employees
 	WHERE jobTitle = 'Sales Rep')
 WHERE salesRepEmployeeNumber IS NULL;
+
+/*	--- ELIMINARE DATI ---
+Come posso eliminare dati dalla tabella? 
+
+							!!ATTENZIONE:
+- Non si torna indietro
+- Prima di eseguire la query, provare a metterci una SELECT * per vedere che succede
+*/
+
+DELETE FROM tabella
+[WHERE condizioni];
+
+/* Es 73 - Pag 474 : Eliminare tutti i clienti italiani*/
+DELETE FROM customers
+WHERE country = "Italy";
+/*PERCHE NON FUNZIONA?: Vincoli interrazionali --> Devo prima modificare le altre tabelle!*/
+
+/*	--- CHECK ---
+Permette di introdurre vincoli di integrità generici 
+
+- Le condizioni sono espressioni booleane
+- Possono essere complesse (subquery)
+- Non funzionano in MySql
+*/
+
+CREATE TABLE nomeTab (
+	attr1 tipo 1 
+		CHECK (condizione), 
+    attr2 tipo, ... , 
+		CHECK (condizione))
+    
+/* Es 74 - Pag 479 : - Il genere può essere solo M o F
+					 - Stipendio inferiore a quello del capo*/
+                     
+CREATE TABLE Impiegato (
+	matricola integer,
+    cognome character (20),
+    sesso character NOT NULL
+		CHECK (sesso in ('M', 'F')),
+	stipendio integer, superiore integer,
+		CHECK (stipendio <=
+			(SELECT stipendio
+            FROM Impiegato J
+            WHERE superiore = J.matricola));
+            
+/*	--- ASSERTION ---
+Permette di introdurre vincoli di integrità a livello di schema 
+
+- Le condizioni sono espressioni booleane
+- Possono essere complesse (subquery)
+- Non funzionano in MySql
+*/
+
+CREATE ASSERTION nome 
+	CHECK (condizione)
+
+/* Es 75 - Pag 481 : La tabella impiegato deve avere almeno un nominativo*/
+CREATE ASSERTION AlmenoUnImpiegato
+	CHECK ((SELECT count(*) FROM Impiegato) >= 1);
+
+
+
+
+
     
     
 
