@@ -74,10 +74,43 @@ JOIN products AS p ON od.productCode = p.productCode
 WHERE (quantityOrdered*priceEach) >= (
 	SELECT max(quantityOrdered*priceEach) FROM orderdetails od2
     WHERE od.orderNumber = od2.orderNumber)
-ORDER BY od.orderNumber
+ORDER BY od.orderNumber;
 
+/*Es 5: Mostra il numero dell'ufficio, totale dell'ordine e nome e cognome del venditore che ha chiuso l'ordine più grande per ogni ufficio*/
+SELECT
+	o.officeCode AS 'Numero Ufficio',
+    t.orderValue AS 'Totale Ordine',
+    e.firstName AS 'Nome',
+    e.lastName AS 'Cognome'
+FROM offices o 
+JOIN employees e using (officeCode) 
+JOIN customers c ON c.salesRepEmployeeNumber = e.employeeNumber 
+JOIN ( 
+    SELECT 
+        o2.customerNumber, 
+        SUM(od.quantityOrdered * od.priceEach) AS orderValue, 
+        o2.orderNumber 
+    FROM orders o2 
+    JOIN orderdetails od USING (orderNumber) 
+    GROUP BY o2.orderNumber 
+) t 
+    USING (customerNumber) 
+WHERE t.orderValue = ( 
+    SELECT MAX(t2.orderValue) 
+    FROM ( 
+        SELECT 
+            SUM(quantityOrdered * priceEach) AS orderValue, 
+            officeCode 
+        FROM orders JOIN orderdetails USING(orderNumber) 
+        JOIN customers USING (customerNumber) 
+        JOIN employees 
+            ON employeeNumber = salesRepEmployeeNumber 
+        GROUP BY orderNumber, officeCode 
+    ) t2 
+    WHERE t2.officeCode = o.officeCode 
+)
 
-
+            
 
 
     

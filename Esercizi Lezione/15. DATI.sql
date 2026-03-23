@@ -165,8 +165,30 @@ CREATE ASSERTION nome
 /* Es 75 - Pag 481 : La tabella impiegato deve avere almeno un nominativo*/
 CREATE ASSERTION AlmenoUnImpiegato
 	CHECK ((SELECT count(*) FROM Impiegato) >= 1);
+    
+/*--- VARIABILI ---
+Posso definire variabili da usare nelle query
 
+- Vivono e muoiono nella sessione
+- Il valore può essere anche una query che ritorna un solo dato
+- MySQL: case insensitive, solo tipi semplici (integer, decimal, string, ...)
+*/
 
+SET @variabile = valore;
+SELECT @variabile;
+
+/* Es 76 - Pag 498 : Creare una variabile di nome "Pippo", assegnarci il valore "Hello world!" e mostrarne il contenuto */
+SET @pippo = 'Hello, World!';
+SELECT @pippo;
+
+/* Es 77 - Pag 499: Salvare nella variabile "Prezzo" il prezzo più alto (MSRP) presente a listino e mostrarne il valore */
+SET @prezzo = (SELECT max(MSRP)
+FROM products);
+SELECT @prezzo;
+
+/* Es 78 - Pag 500: Mostrare i prodotti in cui il valore MSRP è pari alla variabile appena impostata */
+SELECT * FROM products
+WHERE MSRP = @prezzo;
 
 
 
