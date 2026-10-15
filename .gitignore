@@ -1,0 +1,23 @@
+# --- Database files (generati durante gli esercizi) ---
+*.db
+*.sqlite
+*.sqlite3
+*.mdb
+*.accdb
+
+# --- Output query (export) ---
+*.csv
+*.xlsx
+*.log
+
+# --- File di sistema ---
+desktop.ini
+.DS_Store
+Thumbs.db
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
